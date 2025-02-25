@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - agendamento-transferencia
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+    command: ["npm", "run", "serve"]
+    networks:
+      - agendamento-transferencia
+
+networks:
+  agendamento-transferencia:
+    driver: bridge
